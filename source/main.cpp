@@ -1,11 +1,3 @@
-// Include the most common headers from the C standard library
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-// Include the main libnx system header, for Switch development
-#include <switch.h>
-
 #include <SDL.h>
 #include <SDL_mixer.h>
 #include <SDL_image.h>
@@ -60,22 +52,8 @@ consoleInit(NULL);
 	//splash();
 	
 	while(appletMainLoop()){
-		//maint=0;
-		        // Scan the gamepad. This should be done once for each frame
-        padUpdate(&pad);
-
-        // padGetButtonsDown returns the set of buttons that have been
-        // newly pressed in this frame compared to the previous one
-        u64 kDown = padGetButtonsDown(&pad);
-
-        if (kDown & HidNpadButton_Plus)
-            break; // break in order to return to hbmenu
-
-        // Your code goes here
-
-        // Update the console, sending a new frame to the display
-        consoleUpdate(NULL);
-		//Mainprogram();
+		maint=0;
+		Mainprogram();
 	}
 	
     // Free the loaded sound
