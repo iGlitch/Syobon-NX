@@ -19,19 +19,19 @@
 #endif
 
 #ifndef PREFIX
-#define PREFIX "./switch/syobon/data/"
+#define PREFIX "sdmc:/switch/syobon/data/"
 #endif
 
 #ifndef BGM_PREFIX
-#define BGM_PREFIX PREFIX "bgm/"
+#define BGM_PREFIX PREFIX "bgm"
 #endif
 
 #ifndef RES_PREFIX
-#define RES_PREFIX PREFIX "res/"
+#define RES_PREFIX PREFIX "res"
 #endif
 
 #ifndef SE_PREFIX
-#define SE_PREFIX PREFIX "se/"
+#define SE_PREFIX PREFIX "se"
 #endif
 
 #include "joyconfig.h"

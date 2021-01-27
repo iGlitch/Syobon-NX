@@ -4,16 +4,25 @@
 #include <SDL_ttf.h>
 #include "main.h"
 #include "txtmsg.h"
+#define SCREEN_W 1280
+#define SCREEN_H 720
+extern "C" void userAppInit() {
+    socketInitializeDefault();
+    nxlinkStdio();
+}
+
+extern "C" void userAppExit(){
+    socketExit();
+}
 
 //int main() {
 int main(int argc, char* argv[]){
-consoleInit(NULL);
-	printf("before inits");
+    // consoleInit(NULL);
+	//printf("before inits");
 	SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER|SDL_INIT_AUDIO|SDL_INIT_JOYSTICK);
    // Mix_Init(MIX_INIT_OGG);
    // IMG_Init(IMG_INIT_PNG);
-    TTF_Init();
-
+    //TTF_Init();
 
     //Configure our supported input layout: a single player with standard controller styles
     padConfigureInput(1, HidNpadStyleSet_NpadStandard);
@@ -23,49 +32,29 @@ consoleInit(NULL);
 
 	// Start SDL with audio support
 	printf("part 1 inits done.");
-	
-    //SDL_Event event;
-    SDL_Window *window;
-    SDL_Renderer *renderer;
-   // int done = 0, x = 0, w = 1920, h = 1080;
 
-	printf("idfk");
-    // create an SDL window (OpenGL ES2 always enabled)
-    // when SDL_FULLSCREEN flag is not set, viewport is automatically handled by SDL (use SDL_SetWindowSize to "change resolution")
-    // available switch SDL2 video modes :
-    // 1920 x 1080 @ 32 bpp (SDL_PIXELFORMAT_RGBA8888)
-    // 1280 x 720 @ 32 bpp (SDL_PIXELFORMAT_RGBA8888)
-    window = SDL_CreateWindow("sdl2_gles2", 0, 0, 1920, 1080, 0);
-    if (!window) {
-        SDL_Quit();
-        return -1;
-    }
-	printf("create window");
-    // create a renderer (OpenGL ES2)
-    renderer = SDL_CreateRenderer(window, 0, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (!renderer) {
-        SDL_Quit();
-        return -1;
-    }
-	//loadg();
+    //SDL_Event event;
+    SDL_Window* window = SDL_CreateWindow("Syobon Action", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_W, SCREEN_H, SDL_WINDOW_SHOWN);
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
+    SDL_JoystickEventState(SDL_ENABLE);
+    SDL_JoystickOpen(0);
 	printf("after renderer?");
+	loadg();
 	//splash();
-	
 	while(appletMainLoop()){
 		maint=0;
 		Mainprogram();
 	}
-	
-    // Free the loaded sound
-  //  Mix_FreeMusic(audio);
-    // Shuts down SDL subsystems
+	printf("idfk");
+	SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+	IMG_Quit();
+    Mix_CloseAudio();
+	TTF_Quit();
     SDL_Quit();
-    // Deinitialize and clean up resources used by the console (important!)
-    romfsExit();
-	consoleExit(NULL);
-	exit(0);
-}
 
+    return 0;
+}
 /* メイン描画 */
 void rpaint(){
 
